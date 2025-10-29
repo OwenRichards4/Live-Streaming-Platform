@@ -5,6 +5,7 @@
     --middle-gray: #2b2727;
     --off-white: #f3f3f3;
     --text-white: #949494;
+    --button-hover: #353535;
 
     --skyblue: #4cc4f3;
     --skyblue-hovered: #2d9fe0;
@@ -183,7 +184,7 @@ header {
 
 .header-button:hover {
     cursor: pointer;
-    background-color: var(--light-gray);
+    background-color: var(--button-hover);
 }
 
 .channel-logo {
@@ -280,14 +281,15 @@ main {
     padding: 0 5px;
     gap: 8px;
 
-    width: 95%;
+    max-width: 95%;
+    
     height: 40px;
 
     border-radius: 10px;
 }
 
 .user-display-toggle:hover {
-    background-color: var(--light-gray);
+    background-color: var(--button-hover);
     cursor: pointer;
 }
 

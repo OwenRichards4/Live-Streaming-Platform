@@ -457,7 +457,7 @@ let currToggle = true;
 window.addEventListener('resize', () => {
     let sidebarState = window.innerWidth;
 
-    if (window.location.pathname == "/index.html") {
+    if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
         checkSizeofChannels(".followed-channels");
         checkSizeofChannels(".recommended-channels");
         checkSizeofGames();
@@ -535,7 +535,7 @@ async function loginWithData() {
                 localStorage.setItem('user', username.value);
                 localStorage.setItem('userLogo', jsonData[i].icon + ".png")
 
-                window.location.href = "../index.html";
+                window.location.href = "index.html";
                 return
             }
         }
