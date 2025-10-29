@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live-Streaming Platform | Explore</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+</head>
+<body id="body">
+    <main id="main">
+        <div class="main-body" id="main-body">
+            <div class="explore-img-and-title" id="explore-img-and-title">
+                <img class="explore-game-img" id="explore-game-img">
+                <div class="explore-title" id="explore-title">
+                    <h2 class="section-title" id="section-title"></h2>
+                    <hr id="section-hr">
+                </div>
+            </div>
+            <div class="grid-body" id="grid-body"></div>
+        </div>
+        <div class="toggle-menu" id="toggle-menu">
+            <container class="followed-channels-toggle" id="followed-channels-toggle" style="color: white;">
+                <container class="header-and-toggle">
+                    <h3 class="toggle-header" id="followed-toggle-header">Followed Channels</h3>
+                    <ion-icon name="arrow-back-outline" class="toggle-button" id="toggle-button" onclick="toggleSidebar()"></ion-icon>
+                </container> 
+            </container>
+            <container class="recommended-channels-toggle" id="recommended-channels-toggle">
+                <h3 class="toggle-header">Try Something New</h3>
+            </container>
+        </div>
+    </main>
+    <header>
+        <a href="index.html" class="website-title"><h2>Live-Streaming Platform</h2></a>
+        <container class="search-bar">
+            <input type="text" class="search-input" id="search-input" placeholder="Search">
+            <container class="search-button">
+                <ion-icon name="search-outline"></ion-icon>
+            </container>
+        </container>
+        <container class="header-buttons" id="header-buttons">
+            <ion-icon name="sunny-outline" class="header-button" id="theme" onclick="themeToggle()"></ion-icon>
+            <ion-icon name="compass-outline" class="header-button" id="explore" onclick="explore()"></ion-icon>
+            <ion-icon name="chatbubbles-outline" class="header-button" id="messaging"></ion-icon>
+            <ion-icon name="cash-outline" class="header-button" id="subscription"></ion-icon>
+            <ion-icon name="help-circle-outline" class="header-button" id="user-logo" onclick="login()"></ion-icon>
+        </container>
+    </header>
+</body>
+<script src="scripts.js"></script>
+<script>
+
+async function getData() {
+     try {
+        const response = await fetch('data/accounts.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        return jsonData;
+    } catch (error) {
+        console.error('Error fetching or parsing data:', error);
+    }
+}
+
+async function fillGridDisplay() {
+    let count = 1;
+    let gameImg = document.getElementById('explore-game-img');
+
+    let string = "";
+    let spaceCheck = false;
+    let gameName = localStorage.getItem('searchedGame');
+    document.getElementById('section-title').innerHTML = "People Playing: " + gameName;
+
+    for (let i = 0; i < gameName.length; i++) {
+        if (i == 0) {
+            string += gameName[i].toLowerCase();
+        } else if (gameName[i] == " ") {
+            spaceCheck = true
+        } else {
+            if (spaceCheck) {
+                string += gameName[i].toUpperCase();
+                spaceCheck = false;
+            } else {
+                string += gameName[i];
+            }
+        }
+    }
+
+    gameImg.src = "images/cards/" + string + "-card.png";
+    
+    const jsonData = await getData();
+    // gameImg.src = 
+    for (let i = 0; i < jsonData.length; i++) {
+        if (jsonData[i].category == localStorage.getItem('searchedGame')) {
+            let currDisplay = document.createElement('div');
+            currDisplay.className = "live-channel-display";
+            currDisplay.id = "live-channel-display-" + count;
+
+            let video = document.createElement('div');
+            video.className = "video-element";
+
+            let title = document.createElement('h4');
+            title.className = "channel-title";
+            title.innerHTML = jsonData[i].title;
+
+            let name = document.createElement('h4');
+            name.className = "channel-name";
+            name.innerHTML = jsonData[i].username;
+
+            let game = document.createElement('h4');
+            game.className = "channel-game";
+            game.innerHTML = jsonData[i].category;
+
+            let h4s = document.createElement('div');
+            h4s.className = "channel-h4s";
+            h4s.append(title, name, game);
+
+            currDisplay.append(video, h4s);
+
+            document.getElementById('grid-body').append(currDisplay);
+            count++;
+        }
+    }
+}
+
+async function fillGridDisplayAll() {
+    const jsonData = await getData();
+    const sorted = jsonData.sort((a, b) => b.viewers - a.viewers);
+
+    document.getElementById('section-title').innerHTML = "All Streamers"
+    document.getElementById('explore-title').style.width = "100%";
+    document.getElementById('section-title').style.margin = "0";
+    document.getElementById('section-hr').style.margin = "0";
+    document.getElementById('explore-game-img').style.display = "none";
+    document.getElementById('explore-img-and-title').style.margin = "20px 20px 0";
+
+    for (let i = 0; i < sorted.length; i++) {
+        let currDisplay = document.createElement('div');
+        currDisplay.className = "live-channel-display";
+        currDisplay.id = "live-channel-display-" + (i+1);
+
+        let video = document.createElement('div');
+        video.className = "video-element";
+
+        let title = document.createElement('h4');
+        title.className = "channel-title";
+        title.innerHTML = sorted[i].title;
+
+        let name = document.createElement('h4');
+        name.className = "channel-name";
+        name.innerHTML = sorted[i].username;
+
+        let game = document.createElement('h4');
+        game.className = "channel-game";
+        game.innerHTML = sorted[i].category;
+
+        let img = document.createElement('img');
+        img.className = "channel-img";
+        img.src = sorted[i].icon + ".png";
+
+        let h4s = document.createElement('div');
+        h4s.className = "channel-h4s";
+        h4s.append(title, name, game);
+
+        let details = document.createElement('div');
+        details.className = "channel-details";
+        details.append(img, h4s);
+
+        currDisplay.append(video, details);
+
+        document.getElementById('grid-body').append(currDisplay);
+    }
+}
+
+
+window.onload = async function() {
+    if (localStorage.getItem('searchedGame') == "all") {
+        await fillGridDisplayAll();
+    } else {
+        await fillGridDisplay();
+    }
+    
+    let headerButtons = document.getElementById('header-buttons');
+    if (localStorage.getItem('user') != "" && localStorage.getItem('user') != null && headerButtons) {
+        headerButtons.removeChild(headerButtons.lastElementChild)
+
+        let img = document.createElement('img');
+        
+        img.src = localStorage.getItem('userLogo');
+        img.className = "channel-logo";
+
+        headerButtons.appendChild(img);
+    }
+
+    if (localStorage.getItem('theme')) {
+        if (localStorage.getItem('theme') == "light") {
+            localStorage.setItem('theme', "dark");
+        } else {
+            localStorage.setItem('theme', "light");
+        }
+        themeToggle();
+    } else {
+        getTheme();
+    }
+
+    liveChannelDisplayAddEvent();
+}
+
+
+
+// FILL TOGGLE
+fetchAccountsData();
+fetchUserData();
+    
+    
+        
+    
+// ######################## TOGGLE SLIDE TRANSFORMATION ######################## \\
+let toggled = false
+const toggleButton = document.getElementById('toggle-button');
+const main = document.getElementById('main-body');
+const toggleMenu = document.getElementById('toggle-menu');
+
+function toggleSidebar() {
+    let channels = document.querySelectorAll('.user-display-toggle');
+    const nameAndGame = document.getElementById('name-and-game-toggle');
+    const symbAndVC = document.getElementById('live-viewer-count-container');
+    if (!toggled) {
+        toggleMenu.style.transform = "translateX(-80%)";
+        
+        main.style.marginLeft = "50px";
+        main.style.width = "calc(100% - 50px)";
+
+        toggleButton.style.transform = "rotate(180deg)";
+
+        channels.forEach(element => {element.style.transform = `translateX(${86}%)`;});
+    } else {
+        toggleMenu.style.transform = `translateX(${0}%)`;
+        
+        main.style.marginLeft = "250px"
+        main.style.width = "calc(100% - 250px)";
+        
+        toggleButton.style.transform = "rotate(0deg)";
+
+        main.style.transform = `translateX(-${0}px) scaleX(1)`;
+
+        channels.forEach(element => {element.style.transform = `translateX(${0}%)`;});
+    }
+    toggled = !toggled;
+}
+
+
+</script>
+</html>

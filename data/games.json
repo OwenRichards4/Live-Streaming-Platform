@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Overwatch 2",
+        "liveCount": 818,
+        "dailyTotal": 0,
+        "src": "images/cards/overwatch2-card"
+    },
+    {
+        "name": "Rocket League",
+        "liveCount": 181,
+        "dailyTotal": 0,
+        "src": "images/cards/rocketLeague-card"
+    },
+    {
+        "name": "Grand Theft Auto V",
+        "liveCount": 563,
+        "dailyTotal": 0,
+        "src": "images/cards/grandTheftAutoV-card"
+    },
+    {
+        "name": "Fortnite",
+        "liveCount": 16,
+        "dailyTotal": 0,
+        "src": "images/cards/fortnite-card"
+    },
+    {
+        "name": "League of Legends",
+        "liveCount": 88,
+        "dailyTotal": 0,
+        "src": "images/cards/leagueOfLegends-card"
+    },
+    {
+        "name": "Red Dead Redemption 2",
+        "liveCount": 0,
+        "dailyTotal": 0,
+        "src": "images/cards/redDeadRedemption2-card"
+    },
+    {
+        "name": "Just Chatting",
+        "liveCount": 32,
+        "dailyTotal": 0,
+        "src": "images/cards/justChatting-card"
+    },
+    {
+        "name": "IRL",
+        "liveCount": 121,
+        "dailyTotal": 0,
+        "src": "images/cards/IRL-card"
+    },
+    {
+        "name": "Minecraft",
+        "liveCount": 326,
+        "dailyTotal": 0,
+        "src": "images/cards/minecraft-card"
+    },
+    {
+        "name": "Battlefield 6",
+        "liveCount": 0,
+        "dailyTotal": 0,
+        "src": "images/cards/battlefield6-card"
+    },
+    {
+        "name": "Valorant",
+        "liveCount": 0,
+        "dailyTotal": 0,
+        "src": "images/cards/valorant-card"
+    },
+    {
+        "name": "Dead by Daylight",
+        "liveCount": 0,
+        "dailyTotal": 0,
+        "src": "images/cards/deadByDaylight-card"
+    },
+    {
+        "name": "Marvel Rivals",
+        "liveCount": 0,
+        "dailyTotal": 0,
+        "src": "images/cards/marvelRivals-card"
+    },
+    {
+        "name": "Counter Strike 2",
+        "liveCount": 0,
+        "dailyTotal": 0,
+        "src": "images/cards/counterStrike2-card"
+    }
+]

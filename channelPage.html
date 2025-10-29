@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live-Streaming Platform | Channel Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+</head>
+<body id="body">
+    <main id="main">
+        <div class="main-body" id="main-body">
+            <div class="video-and-information" id="video-and-information">
+                <div class="video-display" id="video-display">
+                    <div class="black-box" id="black-box"></div>
+                    <div class="video" id="video"></div>
+                    <!-- <img class="video" id="video" src="images/video/livestream.png"> -->
+                    <div class="black-box"></div>
+                </div>
+                <div class="additional-information">
+                    <div class="channel-flex">
+                        <div class="channel-information">
+                            <img class="channel-icon" id="channel-icon" src="">
+                            <div class="channel-name-title-game" id="channel-name-title-game">
+                                <h2 class="channel-name-info" id="channel-name-info"></h2>
+                                <h4 class="channel-title-info" id="channel-title-info"></h4>
+                                <h4 class="channel-game-info" id="channel-game-info"></h4>
+                            </div>
+                        </div>
+                        <div class="channel-buttons">
+                            <ion-icon name="heart-sharp" class="follow-button" id="follow-button"></ion-icon>
+                            <ion-icon name="notifications-sharp" class="notif-button" id="notif-button"></ion-icon>
+                            <ion-icon name="gift-sharp" class="gift-button" id="gift-button"></ion-icon>
+                            <div class="label-button">
+                                <ion-icon name="diamond-outline" class="subscribe-button" id="subscribe-button"></ion-icon>
+                                <p>Subscribe</p>
+                            </div>
+                            <div class="live-viewer-count-container">
+                                <div class="live-symbol"></div>
+                                <h4 class="user-viewer-count-page" id="user-viewer-count"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="toggle-menu" id="toggle-menu">
+            <container class="followed-channels-toggle" id="followed-channels-toggle" style="color: white;">
+                <container class="header-and-toggle">
+                    <h3 class="toggle-header" id="followed-toggle-header">Followed Channels</h3>
+                    <ion-icon name="arrow-back-outline" class="toggle-button" id="toggle-button" onclick="toggleSidebar()"></ion-icon>
+                </container> 
+            </container>
+            <container class="recommended-channels-toggle" id="recommended-channels-toggle">
+                <h3 class="toggle-header">Try Something New</h3>
+            </container>
+        </div>
+        <div class="chatbox-area" id="chatbox-area">
+            <container class="chatbox-and-toggle">
+                <ion-icon name="arrow-forward-outline" class="toggle-button" id="chatbox-button" onclick="toggleChatbox()"></ion-icon>
+                <h3 class="chatbox-header">Live Chat</h3>
+                <ion-icon name="information-circle-outline" class="information-button" id="information-button"></ion-icon>
+            </container> 
+            <div class="chatlog" id="chatlog"></div>
+            <div class="chatbox-input-areas">
+                <div class="badge-textbox-emote">
+                    <img src="images/badges/default.png" class="channel-badge" id="channel-badge">
+                    <textarea class="chatbox-input-box" id="chatbox-input-box" placeholder="Send a message" maxlength="150"></textarea>
+                    <ion-icon name="happy-outline" class="channel-emotes"></ion-icon>
+                </div>
+                <div class="chatbox-buttons">
+                    <div class="channel-points-and-image">
+                        <img src="images/points/default.png" class="channel-points-img" id="channel-points-img">
+                        <p class="channel-points-count" id="channel-points-count">Points</p>
+                    </div>
+                    <button class="chatbox-button" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <header>
+        <a href="index.html" class="website-title"><h2>Live-Streaming Platform</h2></a>
+        <container class="search-bar">
+            <input type="text" class="search-input" id="search-input" placeholder="Search">
+            <container class="search-button">
+                <ion-icon name="search-outline"></ion-icon>
+            </container>
+        </container>
+        <container class="header-buttons" id="header-buttons">
+            <ion-icon name="sunny-outline" class="header-button" id="theme" onclick="themeToggle()"></ion-icon>
+            <ion-icon name="compass-outline" class="header-button" id="explore" onclick="explore()"></ion-icon>
+            <ion-icon name="chatbubbles-outline" class="header-button" id="messaging"></ion-icon>
+            <ion-icon name="cash-outline" class="header-button" id="subscription"></ion-icon>
+            <ion-icon name="ellipse-outline" class="header-button" id="user-logo" onclick="login()"></ion-icon>
+        </container>
+    </header>
+</body>
+<script src="scripts.js"></script>
+<script>
+// FILLER INFORMATION
+let badge = document.getElementById('channel-badge');
+let pointsIMG = document.getElementById('channel-points-img');
+let pointsCount = document.getElementById('channel-points-count')
+let channelName = document.getElementById('channel-name-info');
+let channelTitle = document.getElementById('channel-title-info');
+let channelCategory = document.getElementById('channel-game-info');
+let channelIMG = document.getElementById('channel-icon');
+let viewerCount = document.getElementById('user-viewer-count');
+
+
+// FILL INFORMATION
+channelName.innerHTML =  localStorage.getItem('viewingName');
+channelTitle.innerHTML = localStorage.getItem('viewingTitle');
+channelCategory.innerHTML = localStorage.getItem('viewingCategory');
+channelIMG.src = localStorage.getItem('viewingIcon') + ".png";
+viewerCount.innerHTML = localStorage.getItem('viewerCount');
+
+document.title = "Live-Streaming Platform | " + channelName.innerHTML;
+
+if (localStorage.getItem('following') == "true") {
+    document.getElementById('follow-button').style.color = "var(--off-white)";
+} else {
+    document.getElementById('follow-button').style.color = "var(--dark-gray)";
+}
+
+if (localStorage.getItem('alert') == "true") {
+    document.getElementById('notif-button').style.color = "var(--off-white)";
+} else {
+    document.getElementById('notif-button').style.color = "var(--dark-gray)";
+}
+
+
+
+fetchAccountsData(accounts);
+fetchUserData();
+
+
+
+// TOGGLE SLIDE TRANSFORMATION
+let toggledSidebar = false
+const toggleButton = document.getElementById('toggle-button');
+const main = document.getElementById('main-body');
+const toggleMenu = document.getElementById('toggle-menu');
+const boxes = document.querySelectorAll('.black-box');
+const video = document.getElementById('video');
+
+function toggleSidebar() {
+    let channels = document.querySelectorAll('.user-display-toggle');
+    const nameAndGame = document.getElementById('name-and-game-toggle');
+    const symbAndVC = document.getElementById('live-viewer-count-container');
+    if (!toggledSidebar) {
+        toggleMenu.style.transform = "translateX(-80%)";
+        
+        main.style.marginLeft = "50px";
+        main.style.width = "calc(100% - 50px)";
+
+        toggleButton.style.transform = "rotate(180deg)";
+
+        channels.forEach(element => {element.style.transform = `translateX(${86}%)`;});
+
+        if (!toggledChatbox) {
+            boxes.forEach(element => {
+                element.style.width = "5%"
+            })
+            video.style.width = "90%";
+        } else {
+            boxes.forEach(element => {
+                element.style.width = "12%"
+            })
+            video.style.width = "76%";
+        }
+    } else {
+        toggleMenu.style.transform = `translateX(${0}%)`;
+        
+        main.style.marginLeft = "250px"
+        main.style.width = "calc(100% - 250px)";
+        
+        toggleButton.style.transform = "rotate(0deg)";
+
+        main.style.transform = `translateX(-${0}px) scaleX(1)`;
+
+        channels.forEach(element => {element.style.transform = `translateX(${0}%)`;});
+
+        if (!toggledChatbox) {
+            boxes.forEach(element => {
+                element.style.width = "0%"
+            })
+            video.style.width = "100%";
+        } else {
+            boxes.forEach(element => {
+                element.style.width = "7.5%"
+            })
+            video.style.width = "85%";
+        }
+    }
+    toggledSidebar = !toggledSidebar;
+}
+
+let toggledChatbox = false;
+const liveChat = document.getElementById('chatbox-area');
+const chatToggle = document.getElementById('chatbox-button');
+const chatlog = document.getElementById('chatlog');
+const videoInfo = document.getElementById('video-and-information');
+
+function toggleChatbox() {
+    if (!toggledChatbox) {
+        liveChat.style.transform = "translateX(100%)";
+
+        chatToggle.style.transform = "rotate(180deg)";
+
+        chatToggle.style.right = "40px";
+
+        videoInfo.style.width = "100%";
+        videoInfo.style.maxWidth = "100%";
+
+
+        if (!toggledSidebar) {
+            boxes.forEach(element => {
+                element.style.width = "7.5%"
+            })
+            video.style.width = "85%";
+        } else {
+            boxes.forEach(element => {
+                element.style.width = "12%"
+            })
+            video.style.width = "76%";
+        }
+    } else {
+        liveChat.style.transform = "translateX(0%)";
+
+        chatToggle.style.right = "0px";
+        chatToggle.style.transform = "rotate(0deg)";
+
+        videoInfo.style.width = "calc(100% - 340px)";
+        videoInfo.style.maxWidth = "calc(100% - 340px)";
+        
+
+        if (!toggledSidebar) {
+            boxes.forEach(element => {
+                element.style.width = "0%"
+            })
+            video.style.width = "100%";
+        } else {
+            boxes.forEach(element => {
+                element.style.width = "5%"
+            })
+            video.style.width = "90%";
+        }
+    }
+    toggledChatbox = !toggledChatbox
+}
+
+
+
+
+
+// IMG ERROR HANDLING
+function getPointsDefault() {
+    document.getElementById('channel-points-img').src = "images/points/default.png";
+}
+function getBadgeDefault() {
+    document.getElementById('channel-badge').src = "images/badges/default.png";
+}
+
+
+
+
+// TEXTAREA
+let inputChatBox = document.getElementById('chatbox-input-box');
+
+// EVENT LISTENERS
+inputChatBox.addEventListener("input", function() {
+    this.style.height = this.scrollHeight + "px"
+})
+
+inputChatBox.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && event.shiftKey) {
+        event.preventDefault();
+    } else if (event.key === 'Enter') {
+        if (inputChatBox.value == "") {
+            event.preventDefault();
+        } else {
+            sendMessage();
+            event.preventDefault();
+        }
+    }
+});
+
+
+// MAKE PLACEHOLDER TEXT RED FOR ERROR
+function makeRed(element) {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #${element.className}::placeholder {
+            color: red;
+        }
+    `;
+    document.head.appendChild
+}
+
+
+// WE'LL NEED TO RESET THE TEXTAREA ON DIFFERENT OCCASIONS
+function resetTextarea() {
+    inputChatBox.value = "";
+    inputChatBox.style.height = "30px";
+}
+
+// SEND A MESSAGE TO CHATLOG
+function sendMessage() {
+    let message = inputChatBox.value;
+    if (message != "") {
+        let chat = document.createElement('div');
+        chat.className = "chat";
+        if (userAccName) {
+            chat.innerHTML = `${userAccName}: ${message}`;
+        }
+        
+        document.getElementById('chatlog').prepend(chat);
+
+        resetTextarea();
+
+        if (!userAccName) {
+            console.log('test')
+            document.getElementById('chatbox-input-box').placeholder = "Login/Sign up to chat!";
+            document.getElementById('chatbox-input-box').className = "chatbox-input-box-red"
+        }
+    }
+}
+
+</script>
+</html>

@@ -1,0 +1,111 @@
+{
+    "following" : [
+        {
+            "username": "example-channel-1",
+            "email": "exampleChannel1@gmail.com",
+            "2fa": true,
+            "updates": false,
+            "icon": "images/icons/default",
+            "live": true,
+            "category": "Overwatch 2",
+            "watchTime": 1,
+            "viewers": 152,
+            "title" : "Top 500 DPS",
+            "alerts": true
+        },
+        {
+            "username": "example-channel-2",
+            "email": "exampleChannel2@gmail.com",
+            "2fa": true,
+            "updates": true,
+            "icon": "images/icons/default",
+            "live": true,
+            "category": "League of Legends",
+            "watchTime": 1,
+            "viewers": 52,
+            "title" : "I don't know what I'm doing",
+            "alerts": true
+        },
+        {
+            "username": "example-channel-3",
+            "email": "exampleChannel3@gmail.com",
+            "2fa": false,
+            "updates": true,
+            "icon": "images/icons/default",
+            "live": true,
+            "category": "Just Chatting",
+            "watchTime": 1,
+            "viewers": 32,
+            "title" : "Catching Up | Talking With Viewers",
+            "alerts": false
+        },
+        {
+            "username": "example-channel-4",
+            "email": "exampleChannel4@gmail.com",
+            "2fa": false,
+            "updates": false,
+            "icon": "images/icons/default",
+            "live": true,
+            "category": "Rocket League",
+            "watchTime": 1,
+            "viewers": 87,
+            "title" : "Pushing for SSL",
+            "alerts": true
+        },
+        {
+            "username": "example-channel-5",
+            "email": "exampleChannel5@gmail.com",
+            "2fa": true,
+            "updates": true,
+            "icon": "images/icons/default",
+            "live": true,
+            "category": "Fortnite",
+            "watchTime": 1,
+            "viewers": 16,
+            "title" : "Fortnite Hero with friends",
+            "alerts": false
+        },
+        {
+            "username": "example-channel-6",
+            "email": "exampleChannel6@gmail.com",
+            "2fa": false,
+            "updates": true,
+            "icon": "images/icons/default",
+            "live": true,
+            "category": "IRL",
+            "watchTime": 1,
+            "viewers": 121,
+            "title" : "Day at Disney!!!",
+            "alerts": false
+        },
+        {
+            "username": "example-channel-7",
+            "email": "exampleChannel7@gmail.com",
+            "2fa": false,
+            "updates": true,
+            "icon": "images/icons/default",
+            "live": true,
+            "category": "Overwatch 2",
+            "watchTime": 1,
+            "viewers": 68,
+            "title" : "Worst patch update this season",
+            "alerts": true
+        },{
+            
+        }
+    ],
+    "subscriptions" : [
+        {
+
+        }
+    ],
+    "messages" : [
+        {
+
+        }
+    ],
+    "settings" : {
+        "mode": "dark"
+    }
+}
+    

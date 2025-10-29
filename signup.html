@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live-Streaming Platform | Sign Up</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+</head>
+<body>
+    <container class="sign-up-container" id="sign-up-container">
+        <div class="sign-up" id="sign-up">
+            <container class="sign-up-title-container">
+                <h2 class="sign-up-header">Create an Account</h2><hr id="sign-in-hr">
+            </container>
+            <container>
+                <label for="username">Username</label><br>
+                <input type="text" id="username" class="sign-up-input" id="text-input" placeholder="Between 6-15 characters"><br>
+                <h4 class="error-message" id="username-error"></h4>
+            </container>
+            <container>
+                <label for="email">Email</label><br>
+                <input type="text" id="email" class="sign-up-input" id="text-input" placeholder="Email Address">
+                <h4 class="error-message" id="email-error"></h4>
+            </container>
+            <container>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" class="sign-up-input" id="text-input" placeholder="***************">
+                <h4 class="error-message" id="password-error"></h4>
+            </container>
+            <container>
+                <input type="checkbox" id="2fa" class="sign-up-check-box">
+                <label for="2fa">I'd like to setup 2fa.</label>
+            </container>
+            <container>
+                <input type="checkbox" id="updates" class="sign-up-check-box">
+                <label for="updates">I'd like to recieve emails containing the company news letter.</label>
+            </container>
+            <button onclick="createAccount()">Submit</button>
+            <a href="signin.html" class="log-in-button">I already have an account!</a>
+        </div>
+    </container>
+    <header>
+        <a href="index.html" class="website-title"><h2>Live-Streaming Platform</h2></a>
+        <container class="search-bar">
+            <input type="text" class="search-input" id="search-input" placeholder="Search">
+            <container class="search-button">
+                <ion-icon name="search-outline"></ion-icon>
+            </container>
+        </container>
+        <container class="header-buttons" id="header-buttons">
+            <ion-icon name="sunny-outline" class="header-button" id="theme" onclick="themeToggle()"></ion-icon>
+            <ion-icon name="compass-outline" class="header-button" id="explore" onclick="explore()"></ion-icon>
+            <ion-icon name="chatbubbles-outline" class="header-button" id="messaging"></ion-icon>
+            <ion-icon name="cash-outline" class="header-button" id="subscription"></ion-icon>
+            <ion-icon name="help-circle-outline" class="header-button" id="user-logo" onclick="login()"></ion-icon>
+        </container>
+    </header>
+</body>
+<script src="scripts.js"></script>
+<script>
+    let username = document.getElementById('username');
+    let email = document.getElementById('email');
+    let password = document.getElementById('password');
+    let twoFA = document.getElementById('2fa');
+    let updates = document.getElementById('updates');
+
+    let usernameError = document.getElementById('username-error');
+    let emailError = document.getElementById('email-error');
+    let passwordError = document.getElementById('password-error');
+
+    // const fs = require('fs');
+    // const filePath = 'data/accounts.json';
+
+    function createAccount() {
+        if (username.value.length < 6 || username.value.length > 15) {
+            usernameError.innerHTML = "Username must be at least 6 characters long";
+            usernameError.style.display = "block";
+        } else if (username.value.length >= 6 && username.value.length <= 15 && usernameError.style.display == "block") {
+            usernameError.style.display = "none";
+        }
+
+        if (!email.value.includes('@') || !email.value.includes('.com')) {
+            emailError.innerHTML = "Invalid email address";
+            emailError.style.display = "block";
+        } else if (email.value.includes('@') && email.value.includes('.com') && emailError.style.display == "block") {
+            emailError.style.display = "none";
+        }
+
+        if (!password.value.includes('!') && !password.value.includes('?') && !password.value.includes('$') && !password.value.includes('@')  && !password.value.includes('#') && !password.value.includes('%') && !password.value.includes('^')) {
+            passwordError.innerHTML = "Password must contain a number and special character (!, ?, $, @, #, %, ^)";
+            passwordError.style.display = "block";
+        } else if ((password.value.includes('!') && password.value.includes('?') && password.value.includes('$') && password.value.includes('@')  && password.value.includes('#') && password.value.includes('%') && password.value.includes('^')) && passwordError.style.display == "block") {
+            passwordError.style.display = "none";
+        }
+
+        // INITALIZING ACCOUNT
+        if (usernameError.style.display == "" && emailError.style.display == "" && passwordError.style.display == "") {
+            // LOAD DATA INTO ACCOUTNS.JSON
+            const data = {
+                "username": username.value,
+                "email": email.value,
+                "password": password.value,
+                "2fa": twoFA.checked,
+                "updates": updates.checked,
+                "icon": "images/icons/default",
+                "live": false,
+                "category": "",
+                "watchTime": 0,
+                "viewers": 0,
+                "title" : ""
+            }
+            
+            // ################################## TODO: I'll NEED TO SETUP NODE.JS ################################## //
+            
+        }
+        // loginWithData();
+    }
+</script>
+</html>
