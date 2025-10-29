@@ -298,7 +298,12 @@ function fillCards(displayedData, itter) {
     
     gameName.innerHTML = displayedData.name;
     viewers.innerHTML = "Viewers: " + displayedData.liveCount;
-    img.src = displayedData.src + ".png";
+
+    if (displayedData.src == "images/cards/IRL-card") {
+        img.src = "images/cards/iRL-card" + ".png";
+    } else {
+        img.src = displayedData.src + ".png";
+    }
 
     img.onerror = function() {
         img.onerror = null; 
