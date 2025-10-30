@@ -12,9 +12,9 @@
 </head>
 <body id="body">
     <main id="main">
-        <div class="main-body" id="main-body">
+        <div class="main-body index-main-body" id="main-body">
             <div class="featured-video-section" id="featured-video-section">
-                <div class="primary-featured-video-section">
+                <div class="primary-featured-video-section" id="primary-featured-video-section">
                     <div class="featured-video" id="featured-video"></div>
                     <div class="featured-text" id="featured-text">
                         <h1 class="featured-video-title" id="featured-video-title"></h1>
@@ -197,18 +197,21 @@
         </div>
         <div class="toggle-menu" id="toggle-menu">
             <container class="followed-channels-toggle" id="followed-channels-toggle" style="color: white;">
-                <container class="header-and-toggle">
+                <container class="header-and-toggle" id="header-and-toggle">
                     <h3 class="toggle-header" id="followed-toggle-header">Followed Channels</h3>
                     <ion-icon name="arrow-back-outline" class="toggle-button" id="toggle-button" onclick="toggleSidebar()"></ion-icon>
                 </container> 
             </container>
             <container class="recommended-channels-toggle" id="recommended-channels-toggle">
-                <h3 class="toggle-header">Try Something New</h3>
+                <h3 class="toggle-header" id="recommended-toggle-header">Try Something New</h3>
             </container>
         </div>
     </main>
-    <header>
-        <a href="index.html" class="website-title"><h2>Live-Streaming Platform</h2></a>
+    <header id="headerfasfas">
+        <a href="index.html" class="website-title">
+            <ion-icon name="home-outline" class="home-button"></ion-icon>
+            <h2 class="website-title-text">Live-Streaming Platform</h2>
+        </a>
         <container class="search-bar">
             <input type="text" class="search-input" id="search-input" placeholder="Search">
             <container class="search-button">
@@ -216,11 +219,11 @@
             </container>
         </container>
         <container class="header-buttons" id="header-buttons">
-            <ion-icon name="sunny-outline" class="header-button" id="theme" onclick="themeToggle()"></ion-icon>
-            <ion-icon name="compass-outline" class="header-button" id="explore" onclick="explore()"></ion-icon>
-            <ion-icon name="chatbubbles-outline" class="header-button" id="messaging"></ion-icon>
-            <ion-icon name="cash-outline" class="header-button" id="subscription"></ion-icon>
-            <ion-icon name="help-circle-outline" class="header-button" id="user-logo" onclick="login()"></ion-icon>
+            <ion-icon name="sunny-outline" class="header-button theme-toggle" id="theme" onclick="themeToggle()"></ion-icon>
+            <ion-icon name="compass-outline" class="header-button explore-button" id="explore" onclick="explore()"></ion-icon>
+            <ion-icon name="chatbubbles-outline" class="header-button messaging-button" id="messaging"></ion-icon>
+            <ion-icon name="cash-outline" class="header-button subscription-button" id="subscription"></ion-icon>
+            <ion-icon name="help-circle-outline" class="header-button icon-button" id="user-logo" onclick="login()"></ion-icon>
         </container>
     </header>
 </body>
@@ -232,46 +235,6 @@ function createFollowedVideoDisplay(displayedData, itter) {
     document.getElementById("channel-name-" + itter).innerHTML = displayedData.username;
     document.getElementById('channel-title-' + itter).innerHTML = displayedData.title;
     document.getElementById('channel-game-' + itter).innerHTML = displayedData.category;
-}
-
-
-
-
-
-// ######################## TOGGLE SLIDE TRANSFORMATION ######################## \\
-let toggled = false
-const toggleButton = document.getElementById('toggle-button');
-const main = document.getElementById('main-body');
-const toggleMenu = document.getElementById('toggle-menu');
-
-
-function toggleSidebar() {
-    let channels = document.querySelectorAll('.user-display-toggle');
-    const nameAndGame = document.getElementById('name-and-game-toggle');
-    const symbAndVC = document.getElementById('live-viewer-count-container');
-
-    if (!toggled) {
-        toggleMenu.style.transform = "translateX(-80%)";
-        
-        main.style.marginLeft = "50px";
-        main.style.width = "calc(100% - 50px)";
-
-        toggleButton.style.transform = "rotate(180deg)";
-
-        channels.forEach(element => {element.style.transform = `translateX(${86}%)`;});
-    } else {
-        toggleMenu.style.transform = `translateX(${0}%)`;
-        
-        main.style.marginLeft = "250px"
-        main.style.width = "calc(100% - 250px)";
-        
-        toggleButton.style.transform = "rotate(0deg)";
-
-        main.style.transform = `translateX(-${0}px) scaleX(1)`;
-
-        channels.forEach(element => {element.style.transform = `translateX(${0}%)`;});
-    }
-    toggled = !toggled;
 }
 
 
@@ -333,6 +296,19 @@ function fillFeaturedData(displayedData) {
     featTitle.innerHTML = displayedData.title;
     featName.innerHTML = displayedData.username;
     featCat.innerHTML = displayedData.category;
+
+    document.getElementById('primary-featured-video-section').addEventListener('click', () => {
+        localStorage.setItem('viewingName', displayedData.username)
+        localStorage.setItem('viewingCategory', featCat.innerHTML = displayedData.category)
+
+        fetchAccountsData();
+        
+        getChannelIcon(displayedData.username);
+        getChannelTitle(displayedData.username);
+        getViewerCount(displayedData.username)
+
+        window.location.href = "channelPage.html";
+    });
 }
 
 

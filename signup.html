@@ -44,7 +44,10 @@
         </div>
     </container>
     <header>
-        <a href="index.html" class="website-title"><h2>Live-Streaming Platform</h2></a>
+        <a href="index.html" class="website-title">
+            <ion-icon name="home-outline" class="home-button"></ion-icon>
+            <h2 class="website-title-text">Live-Streaming Platform</h2>
+        </a>
         <container class="search-bar">
             <input type="text" class="search-input" id="search-input" placeholder="Search">
             <container class="search-button">
@@ -52,11 +55,11 @@
             </container>
         </container>
         <container class="header-buttons" id="header-buttons">
-            <ion-icon name="sunny-outline" class="header-button" id="theme" onclick="themeToggle()"></ion-icon>
-            <ion-icon name="compass-outline" class="header-button" id="explore" onclick="explore()"></ion-icon>
-            <ion-icon name="chatbubbles-outline" class="header-button" id="messaging"></ion-icon>
-            <ion-icon name="cash-outline" class="header-button" id="subscription"></ion-icon>
-            <ion-icon name="help-circle-outline" class="header-button" id="user-logo" onclick="login()"></ion-icon>
+            <ion-icon name="sunny-outline" class="header-button theme-toggle" id="theme" onclick="themeToggle()"></ion-icon>
+            <ion-icon name="compass-outline" class="header-button explore-button" id="explore" onclick="explore()"></ion-icon>
+            <ion-icon name="chatbubbles-outline" class="header-button messaging-button" id="messaging"></ion-icon>
+            <ion-icon name="cash-outline" class="header-button subscription-button" id="subscription"></ion-icon>
+            <ion-icon name="help-circle-outline" class="header-button icon-button" id="user-logo" onclick="login()"></ion-icon>
         </container>
     </header>
 </body>

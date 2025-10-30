@@ -5,6 +5,11 @@ let accounts;
 let userdata;
 let games;
 
+
+// VARS
+let currToggle = true;
+let toggled = false
+
 // ######################## ON WINDOW LOAD ######################## \\
 if (window.location.pathname != '/search.html') {
     window.onload = function() {
@@ -30,6 +35,11 @@ if (window.location.pathname != '/search.html') {
         } else {
             getTheme();
         }
+    }
+    if (window.innerWidth < 1600) {
+        setTimeout(function() {
+            toggleFunc();
+        }, 100);
     }
 }
 
@@ -73,6 +83,10 @@ function themeToggle() {
         // MAIN - BODY
         if (document.getElementById('main-body')) {
             document.getElementById('main-body').style.background = "linear-gradient(0deg, var(--light-mode-1) 0%, var(--light-mode-2) 100%)";
+        }
+        // MAIN - MAIN
+        if (document.getElementById('main')) {
+            document.getElementById('main').style.background = "linear-gradient(0deg, var(--light-mode-1) 0%, var(--light-mode-2) 100%)";
         }
         
         // LIVE CHANNEL DISPLAY
@@ -163,6 +177,10 @@ function themeToggle() {
         // MAIN - BODY
         if (document.getElementById('main-body')) {
             document.getElementById('main-body').style.background = "linear-gradient(0deg, var(--dark-mode-1) 0%, var(--dark-mode-2) 100%)";
+        }
+        // MAIN - MAIN
+        if (document.getElementById('main')) {
+            document.getElementById('main').style.background = "linear-gradient(0deg, var(--dark-mode-1) 0%, var(--dark-mode-2) 100%)";
         }
 
         // LIVE CHANNEL DISPLAY
@@ -420,7 +438,6 @@ function liveChannelDisplayAddEvent() {
         element.addEventListener('click', function() {
             localStorage.setItem('viewingName', this.querySelector(".channel-name").innerHTML)
             localStorage.setItem('viewingCategory', this.querySelector(".channel-game").innerHTML)
-            localStorage.setItem('following', true);
 
             fetchAccountsData();
             
@@ -451,22 +468,127 @@ async function countViewersPerGame(jsonData) {
 
 
 
+function resetToggle() {
+    document.querySelectorAll('.user-display-toggle').forEach(element => {
+        element.remove();
+    });
+    document.querySelectorAll('.user-image-toggle').forEach(element => {
+        element.remove();
+    });
+    if (document.getElementById('view-more')) {
+        document.getElementById('view-more').remove();
+    }
+}
 
-// ######################## RESIZE ######################## \\
-let currToggle = true;
-window.addEventListener('resize', () => {
+async function fillIcons() {
+    if (!accounts) {
+        await fetchAccountsData();
+    }
+
+    let count = 0;
+    accounts.forEach(element => {
+        let img = document.createElement('img');
+        img.src = element.icon + ".png"
+        img.className = "user-image-toggle";
+
+        if (count < 5) {
+            document.getElementById('followed-channels-toggle').append(img);
+        } else if (count >= 5 && count < 10) {
+            document.getElementById('recommended-channels-toggle').append(img);
+        } else {
+            return
+        }
+        
+        count++
+    })
+}
+
+async function fillNormal() {
+    if (!accounts) {
+        await fetchAccountsData();
+    }
+    let jsonData = accounts;
+    for (let i = 0; i < 5; i++) {
+        document.getElementById('recommended-channels-toggle').appendChild(fillUserDataToggle(jsonData[i]));
+    }
+
+    let viewMore = document.createElement('h4');
+    viewMore.className = "view-more";
+    viewMore.id = "view-more";
+    viewMore.innerHTML = "View More";
+    viewMore.addEventListener('click', viewMoreButton);
+    document.getElementById('recommended-channels-toggle').appendChild(viewMore);
+}
+
+// ######################## TOGGLE SLIDE TRANSFORMATION ######################## \\
+function toggleSidebar() {
+    if (window.innerWidth > 700) {
+        
+    }
+    const toggleButton = document.getElementById('toggle-button');
+    const main = document.getElementById('main-body');
+    const toggleMenu = document.getElementById('toggle-menu');
+    let channels = document.querySelectorAll('.user-display-toggle');
+
+    if (!toggled) {
+        toggleMenu.style.width = "2%";
+        
+        if (window.innerWidth > 700) {
+            toggleMenu.style.minWidth = "50px";
+            main.style.marginLeft = "50px";
+            main.style.width = "calc(100% - 50px)";
+        } else {
+            toggleMenu.style.minWidth = "42px";
+            main.style.marginLeft = "42px";
+            main.style.width = "calc(100% - 42px)";
+        }
+
+        if (document.getElementById('followed-toggle-header')) {
+            document.getElementById('followed-toggle-header').innerHTML = "";
+        }
+        if (document.getElementById('recommended-toggle-header')) {
+            document.getElementById('recommended-toggle-header').innerHTML = "";
+        }
+        
+        toggleButton.style.transform = "rotate(180deg)";
+
+        setTimeout(function() {
+            resetToggle();
+            fillIcons();
+        }, 200)
+    } else {
+        toggleMenu.style.width = "13%";
+        toggleMenu.style.maxWidth = "250px";
+
+        if (document.getElementById('followed-toggle-header')) {
+            document.getElementById('followed-toggle-header').innerHTML = "Followed Channels";
+        }
+        if (document.getElementById('recommended-toggle-header')) {
+            document.getElementById('recommended-toggle-header').innerHTML = "Try Something New";
+        }
+        
+        main.style.marginLeft = "13%"
+        main.style.width = "calc(100% - 13%)";
+        
+        toggleButton.style.transform = "rotate(0deg)";
+
+        resetToggle();
+        fetchUserData();
+        fillNormal();
+    }
+    toggled = !toggled;
+
+    setTimeout(function() {
+        if (window.location.pathname == "/" || window.location.pathname == "/index.html") {
+            checkSizeofChannels(".followed-channels");
+            checkSizeofChannels(".recommended-channels");
+            checkSizeofGames();
+        }
+    }, 500)
+}
+
+function toggleFunc() {
     let sidebarState = window.innerWidth;
-
-    if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
-        checkSizeofChannels(".followed-channels");
-        checkSizeofChannels(".recommended-channels");
-        checkSizeofGames();
-    }
-
-    if (window.location.pathname == "/search.html") {
-        checkSizeofGames();
-    }
-    
     // TOGGLE SIDEBAR BASED OFF WIDTH
     if (window.location.pathname != "/signup.html" &&  window.location.pathname != "/signin.html") {
         if (sidebarState < 1600 && currToggle) {
@@ -477,18 +599,41 @@ window.addEventListener('resize', () => {
             currToggle = !currToggle
         }
     }
+}
+
+
+
+
+
+// ######################## RESIZE ######################## \\
+window.addEventListener('resize', () => {
+    if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
+        setTimeout(function() {
+            checkSizeofChannels(".followed-channels");
+            checkSizeofChannels(".recommended-channels");
+            checkSizeofGames();
+        }, 500)
+    }
+
+    toggleFunc()
 });
 
 function checkSizeofChannels(element) {
     let container = document.querySelector(element);
     let items = container.querySelectorAll('.live-channel-display');
-    
+
     // Each card's approximate width + gap
-    const itemWidth = 256 + 20; 
-    const availableWidth = container.offsetWidth;
+    let itemWidth; 
+    if (window.innerWidth < 400) {
+        itemWidth = 144 + 20; 
+    } else {
+        itemWidth = 256 + 20; 
+    }
+    
+    let availableWidth = container.offsetWidth;
 
     // How many items can fit
-    const maxVisible = Math.min(5, Math.floor(availableWidth / itemWidth));
+    let maxVisible = Math.min(5, Math.floor(availableWidth / itemWidth));
 
     items.forEach((item, i) => {
         if (i < maxVisible) {
@@ -500,14 +645,13 @@ function checkSizeofChannels(element) {
 }
 
 function checkSizeofGames() {
-    let container = document.querySelector(".game-cards");
+    let container = document.getElementById('game-cards');
     let items = container.querySelectorAll('.game-card');
-    
-    const itemWidth = 100 + 40; 
+
+    const itemWidth = 100 + 80; 
     const availableWidth = container.offsetWidth;
 
     const maxVisible = Math.min(8, Math.floor(availableWidth / itemWidth));
-
     items.forEach((item, i) => {
         if (i < maxVisible) {
             item.style.display = "block";
@@ -709,4 +853,15 @@ function fillUserDataToggle(displayedData) {
     
     li.append(image, nameAndGame, symbolAndViewerCount);
     return li
+}
+
+if (window.innerWidth <= 700) {
+    document.getElementById('header-and-toggle').style.display = "none";
+    document.getElementById('main-body').style.width = "calc(100% - 42px)";
+    document.getElementById('followed-channels-toggle').style.paddingTop = "10px";
+
+    if (window.location.pathname == "/search.html") {
+        resetToggle();
+        toggleSidebar();
+    }
 }
