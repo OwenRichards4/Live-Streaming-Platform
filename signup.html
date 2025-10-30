@@ -18,7 +18,7 @@
             </container>
             <container>
                 <label for="username">Username</label><br>
-                <input type="text" id="username" class="sign-up-input" id="text-input" placeholder="Between 6-15 characters"><br>
+                <input type="text" id="username" class="sign-up-input" id="text-input" placeholder="Between 5-18 characters"><br>
                 <h4 class="error-message" id="username-error"></h4>
             </container>
             <container>
@@ -78,31 +78,60 @@
     // const fs = require('fs');
     // const filePath = 'data/accounts.json';
 
-    function createAccount() {
-        if (username.value.length < 6 || username.value.length > 15) {
-            usernameError.innerHTML = "Username must be at least 6 characters long";
+    async function createAccount() {
+        if (!accounts) {
+            await fetchAccountsData()
+        }
+
+        if (username.value.length < 5 || username.value.length > 18) {
+            usernameError.innerHTML = "Username must be 5-18 characters long.";
             usernameError.style.display = "block";
-        } else if (username.value.length >= 6 && username.value.length <= 15 && usernameError.style.display == "block") {
-            usernameError.style.display = "none";
+        } else if (username.value.length >= 5 && username.value.length <= 18) {
+            accCheck = false;
+            for (let i = 0; i < accounts.length; i++) {
+                if (username.value == accounts[i].username) {
+                    usernameError.innerHTML = "Username already exists.";
+                    usernameError.style.display = "block";
+
+                    accCheck = true;
+                    break;
+                }
+            } 
+            if (!accCheck) {
+                usernameError.style.display = "none";
+            }
         }
 
         if (!email.value.includes('@') || !email.value.includes('.com')) {
             emailError.innerHTML = "Invalid email address";
             emailError.style.display = "block";
-        } else if (email.value.includes('@') && email.value.includes('.com') && emailError.style.display == "block") {
-            emailError.style.display = "none";
+        } else if (email.value.includes('@') && email.value.includes('.com')) {
+            emailCheck = false;
+            for (let i = 0; i < accounts.length; i++) {
+                if (email.value == accounts[i].email) {
+                    emailError.innerHTML = "Email is already registered with an account.";
+                    emailError.style.display = "block";
+
+                    emailCheck = true;
+                    break
+                }
+            } 
+            if (!emailCheck) {
+                emailError.style.display = "none";
+            }
         }
 
-        if (!password.value.includes('!') && !password.value.includes('?') && !password.value.includes('$') && !password.value.includes('@')  && !password.value.includes('#') && !password.value.includes('%') && !password.value.includes('^')) {
+        if (!password.value.includes('!') && !password.value.includes('?') && !password.value.includes('$') && !password.value.includes('@') && !password.value.includes('#') && !password.value.includes('%') && !password.value.includes('^')) {
             passwordError.innerHTML = "Password must contain a number and special character (!, ?, $, @, #, %, ^)";
             passwordError.style.display = "block";
-        } else if ((password.value.includes('!') && password.value.includes('?') && password.value.includes('$') && password.value.includes('@')  && password.value.includes('#') && password.value.includes('%') && password.value.includes('^')) && passwordError.style.display == "block") {
+        } else if ((password.value.includes('!') || password.value.includes('?') || password.value.includes('$') || password.value.includes('@') || password.value.includes('#') || password.value.includes('%') || password.value.includes('^')) || passwordError.style.display == "block") {
             passwordError.style.display = "none";
         }
 
         // INITALIZING ACCOUNT
-        if (usernameError.style.display == "" && emailError.style.display == "" && passwordError.style.display == "") {
+        if (usernameError.style.display == "none" && emailError.style.display == "none" && passwordError.style.display == "none") {
             // LOAD DATA INTO ACCOUTNS.JSON
+            
             const data = {
                 "username": username.value,
                 "email": email.value,
@@ -116,7 +145,8 @@
                 "viewers": 0,
                 "title" : ""
             }
-            
+            console.log("Account requirements met.")
+            console.log(data)
             // ################################## TODO: I'll NEED TO SETUP NODE.JS ################################## //
             
         }

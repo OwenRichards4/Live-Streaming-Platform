@@ -13,6 +13,7 @@
 <body id="body">
     <main id="main">
         <div class="search-main" id="main-body">
+            <h4 class="results-h4" id="results-h4">Showing results for... </h4>
             <div class="search-channel-name" id="search-channel-name">
                 <h2 class="section-title">Search By Channel Name</h2>
                 <hr>
@@ -64,7 +65,7 @@
 <script src="scripts.js"></script>
 <script>
 let search = localStorage.getItem('search');
-
+document.getElementById('results-h4').innerHTML += '&nbsp&nbsp&nbsp&nbsp;"' + search + '"';
 // TO DO PERFORMANCE NEEDS TO BE IMPORVED - SEARCH IN LOOPS OF POTENTIAL CAUSES
 
 if (localStorage.getItem('theme')) {

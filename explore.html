@@ -119,11 +119,19 @@ async function fillGridDisplay() {
             game.className = "channel-game";
             game.innerHTML = jsonData[i].category;
 
+            let img = document.createElement('img');
+            img.className = "channel-img";
+            img.src = jsonData[i].icon + ".png";
+
             let h4s = document.createElement('div');
             h4s.className = "channel-h4s";
             h4s.append(title, name, game);
 
-            currDisplay.append(video, h4s);
+            let details = document.createElement('div');
+            details.className = "channel-details";
+            details.append(img, h4s);
+
+            currDisplay.append(video, details);
 
             document.getElementById('grid-body').append(currDisplay);
             count++;

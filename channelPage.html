@@ -364,15 +364,17 @@ function sendMessage() {
     if (message != "") {
         let chat = document.createElement('div');
         chat.className = "chat";
-        if (userAccName) {
-            chat.innerHTML = `${userAccName}: ${message}`;
+        if (localStorage.getItem('user') != "") {
+            chat.innerHTML = `${localStorage.getItem('user')}: ${message}`;
+        } else {
+            
         }
         
         document.getElementById('chatlog').prepend(chat);
 
         resetTextarea();
 
-        if (!userAccName) {
+        if (localStorage.getItem('user') == "") {
             document.getElementById('chatbox-input-box').placeholder = "Login/Sign up to chat!";
             document.getElementById('chatbox-input-box').className = "chatbox-input-box-red"
         }

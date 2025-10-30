@@ -308,7 +308,9 @@ async function fetchAccountsData() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         accounts = await response.json();
-        fillRecommendedData(accounts);
+        if (window.location.pathname != "/signup.html" && window.location.pathname != "/signin.html") {
+            fillRecommendedData(accounts);
+        }
         if (window.location.pathname == "/index.html") {
             countViewersPerGame(accounts);
         }
@@ -490,6 +492,8 @@ async function fillIcons() {
         let img = document.createElement('img');
         img.src = element.icon + ".png"
         img.className = "user-image-toggle";
+        img.style.padding = "5px";
+        img.style.borderRadius = "50%";
 
         if (count < 5) {
             document.getElementById('followed-channels-toggle').append(img);
@@ -498,6 +502,15 @@ async function fillIcons() {
         } else {
             return
         }
+
+        img.addEventListener('mouseover', () => {
+            img.style.backgroundColor = "var(--button-hover)";
+            img.style.cursor = "pointer";
+        });
+        img.addEventListener('mouseout', () => {
+            img.style.backgroundColor = "var(--dark-gray)";
+            img.style.cursor = "default";
+        });
         
         count++
     })
@@ -670,6 +683,11 @@ async function loginWithData() {
     if (!accounts) {
         await fetchAccountsData();
     }
+
+    let username = document.getElementById('username');
+    let password = document.getElementById('password');
+    let loginError = document.getElementById('login-error');
+
     jsonData = accounts;
     if (Array.isArray(jsonData)) {
         for (let i = 0; i < jsonData.length; i++) {
