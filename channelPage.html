@@ -51,11 +51,13 @@
             <container class="followed-channels-toggle" id="followed-channels-toggle" style="color: white;">
                 <container class="header-and-toggle" id="header-and-toggle">
                     <h3 class="toggle-header" id="followed-toggle-header">Followed Channels</h3>
-                    <ion-icon name="arrow-back-outline" class="toggle-button" id="toggle-button" onclick="if (window.innerWidth > 700) {toggleSidebar()}"></ion-icon>
+                    <ion-icon name="arrow-back-outline" class="toggle-button" id="toggle-button" onclick="toggleSidebar()"></ion-icon>
                 </container> 
+                <div class="followed-channels-toggle-display" id="followed-channels-toggle-display"></div>
             </container>
             <container class="recommended-channels-toggle" id="recommended-channels-toggle">
                 <h3 class="toggle-header" id="recommended-toggle-header">Try Something New</h3>
+                <div class="recommended-channels-toggle-display" id="recommended-channels-toggle-display"></div>
             </container>
         </div>
         <div class="chatbox-area" id="chatbox-area">
@@ -380,6 +382,10 @@ function sendMessage() {
         }
     }
 }
+
+document.getElementById('information-button').addEventListener('click', () => {
+    alert("this doesn't do anything yet sorry!");
+});
 
 </script>
 </html>

@@ -278,11 +278,13 @@ async function fetchUserData() {
         const jsonData = await response.json();
         let arr = []
         document.getElementById('followed-toggle-header').innerHTML = "Followed Channels";
+        count = 1;
         for (let i = 0; i < jsonData.following.length; i++) {
-            if (jsonData.following[i].live) {
-                document.getElementById('followed-channels-toggle').appendChild(fillUserDataToggle(jsonData.following[i]));
+            if (jsonData.following[i].live && count <= 5) {
+                document.getElementById('followed-channels-toggle-display').appendChild(fillUserDataToggle(jsonData.following[i]));
             }
             arr.push(jsonData.following[i].username)
+            count++;
         }
     
 
@@ -362,19 +364,18 @@ async function fetchUserFollowerData() {
         const jsonData = await response.json();
         followedArr = jsonData;
         userdata = jsonData;
-
-        if (Array.isArray(jsonData.following)) {
-            let followedChannels = document.getElementById('followed-channels');
-
-            const sorted = jsonData.following.sort((a, b) => b.liveCount - a.liveCount);
-            let vidDisplays = document.querySelectorAll('.live-channel-display');
-            for (let i = 1; i <= (vidDisplays.length / 2); i++) {
-                document.getElementById('live-channel-display-'+i).style.display = "grid";
-                createFollowedVideoDisplay(sorted[i], i);
+        if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
+            if (Array.isArray(jsonData.following)) {
+                const sorted = jsonData.following.sort((a, b) => b.liveCount - a.liveCount);
+                let vidDisplays = document.querySelectorAll('.live-channel-display');
+                for (let i = 1; i <= (vidDisplays.length / 2); i++) {
+                    document.getElementById('live-channel-display-'+i).style.display = "grid";
+                    createFollowedVideoDisplay(sorted[i], i);
+                }
+                checkSizeofChannels(".followed-channels");
+            } else {
+                console.error("Fetched data is not an array:", jsonData);
             }
-            checkSizeofChannels(".followed-channels");
-        } else {
-            console.error("Fetched data is not an array:", jsonData);
         }
     } catch (error) {
         console.error('Error fetching or parsing data:', error);
@@ -486,22 +487,18 @@ async function fillIcons() {
     if (!accounts) {
         await fetchAccountsData();
     }
+    if (!userdata) {
+        await fetchUserFollowerData();
+    }
 
-    let count = 0;
-    accounts.forEach(element => {
+    let recCount = 0;
+    let followedCount = 0;
+    for (let i = 0; i < accounts.length; i++) {
         let img = document.createElement('img');
-        img.src = element.icon + ".png"
+        img.src = accounts[i].icon + ".png"
         img.className = "user-image-toggle";
         img.style.padding = "5px";
         img.style.borderRadius = "50%";
-
-        if (count < 5) {
-            document.getElementById('followed-channels-toggle').append(img);
-        } else if (count >= 5 && count < 10) {
-            document.getElementById('recommended-channels-toggle').append(img);
-        } else {
-            return
-        }
 
         img.addEventListener('mouseover', () => {
             img.style.backgroundColor = "var(--button-hover)";
@@ -511,18 +508,63 @@ async function fillIcons() {
             img.style.backgroundColor = "var(--dark-gray)";
             img.style.cursor = "default";
         });
-        
-        count++
-    })
+        img.addEventListener('click', () => {
+            localStorage.setItem('viewingName', accounts[i].username);
+            localStorage.setItem('viewingCategory', accounts[i].category);
+            localStorage.setItem('viewingIcon', accounts[i].icon);
+            localStorage.setItem('viewingTitle', accounts[i].title);
+            localStorage.setItem('following', true);
+            localStorage.setItem('alert', accounts[i].alerts);
+            getViewerCount(accounts[i].username)
+
+            window.location.href = "channelPage.html";
+        })
+
+        let check = false;
+        for (let j = 0; j < userdata.following.length-1; j++) {
+            if (userdata.following[j].username.includes(accounts[i].username)) {
+                check = true;
+            }
+        }
+        if (followedCount < 5 && check) {
+            document.getElementById('followed-channels-toggle-display').append(img);
+            followedCount++;
+        } else if (recCount < 5 && !check) {
+            document.getElementById('recommended-channels-toggle-display').append(img);
+            recCount++;
+        }
+        if (recCount == 5 && followedCount == 5) {
+            return
+        }
+    };
 }
 
 async function fillNormal() {
     if (!accounts) {
         await fetchAccountsData();
     }
+    if (!userdata) {
+        await fetchUserFollowerData();
+    }
+
+    let count = 1;
     let jsonData = accounts;
-    for (let i = 0; i < 5; i++) {
-        document.getElementById('recommended-channels-toggle').appendChild(fillUserDataToggle(jsonData[i]));
+    for (let i = 0; i < accounts.length; i++) {
+        let check = false;
+        for (let j = 0; j < userdata.following.length-1; j++) {
+            if (userdata.following[j].username.includes(accounts[i].username)) {
+                check = true;
+                break;
+            }
+        }
+        if (!check) {
+            document.getElementById('recommended-channels-toggle-display').appendChild(fillUserDataToggle(jsonData[i]));
+            count++;
+        }
+
+        if (count == 6) {
+            return
+        }
     }
 
     let viewMore = document.createElement('h4');
@@ -800,7 +842,7 @@ async function fillRecommendedData(jsonData) {
         let count = 1;
         for (let i = 0; i < jsonData.length; i++) {
             if (arr.includes(jsonData[i].username) == false && count <= maxShown && !toggleRecFillCheck) {
-                document.getElementById('recommended-channels-toggle').appendChild(fillUserDataToggle(jsonData[i]));
+                document.getElementById('recommended-channels-toggle-display').appendChild(fillUserDataToggle(jsonData[i]));
                 count++;
             }
         }
@@ -883,3 +925,13 @@ if (window.innerWidth <= 700) {
         toggleSidebar();
     }
 }
+
+
+
+// EXTRA BUTTONS
+document.getElementById('messaging').addEventListener('click', () => {
+    alert("this doesn't do anything yet sorry!");
+});
+document.getElementById('subscription').addEventListener('click', () => {
+    alert("this doesn't do anything yet sorry!");
+});

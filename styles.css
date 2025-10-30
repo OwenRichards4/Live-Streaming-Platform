@@ -106,12 +106,12 @@ header {
 .search-input {
     background-color: var(--light-gray);
 
-    width: 85%;
+    width: 90%;
     height: 30px;
 
     border: none;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
 
     border-right: var(--off-white) 2px solid;
     color: var(--off-white);
@@ -119,6 +119,10 @@ header {
     padding-left: 10px;
 
     font: inherit;
+}
+
+.search-input:focus {
+    outline: none;
 }
 
 .search-button {
@@ -129,7 +133,7 @@ header {
     align-items: center;
     justify-content: center;
 
-    width: 30px;
+    width: 10%;
     right: 3px;
 
     font-size: 1.3em;
@@ -138,7 +142,6 @@ header {
 .search-button:hover {
     background-color: var(--skyblue-hovered);
     cursor: pointer;
-    color: black;
 }
 
 .search-bar:has(.search-button:hover) {
@@ -282,10 +285,17 @@ main {
     flex-direction: column;
 
     justify-content: flex-end;
-    align-items: center;
 
     gap: 10px;
     padding: 0px 6px;
+}
+
+.followed-channels-toggle-display, .recommended-channels-toggle-display {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    max-width: 100%;
 }
 
 .user-display-toggle {
