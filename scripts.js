@@ -935,3 +935,13 @@ document.getElementById('messaging').addEventListener('click', () => {
 document.getElementById('subscription').addEventListener('click', () => {
     alert("this doesn't do anything yet sorry!");
 });
+
+
+function logout() {
+    localStorage.setItem('user', "");
+    window.location.reload();
+}
+
+function settings() {
+    window.location.href = "settings.html";
+}

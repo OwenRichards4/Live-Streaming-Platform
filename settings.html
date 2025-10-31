@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live-Streaming Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://db.onlinewebfonts.com/c/14936bb7a4b6575fd2eee80a3ab52cc2?family=Feather+Bold" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+</head>
+<body id="body">
+    <main id="main">
+        
+    </main>
+    <div class="account-settings">
+        <h4 onclick="settings()">Settings</h4>
+        <h4 onclick="logout()">Logout</h4>
+    </div>
+    <header>
+        <a href="index.html" class="website-title">
+            <ion-icon name="home-outline" class="home-button"></ion-icon>
+            <h2 class="website-title-text">Live-Streaming Platform</h2>
+        </a>
+        <container class="search-bar">
+            <input type="text" class="search-input" id="search-input" placeholder="Search">
+            <container class="search-button">
+                <ion-icon name="search-outline"></ion-icon>
+            </container>
+        </container>
+        <container class="header-buttons" id="header-buttons">
+            <ion-icon name="sunny-outline" class="header-button theme-toggle" id="theme" onclick="themeToggle()"></ion-icon>
+            <ion-icon name="compass-outline" class="header-button explore-button" id="explore" onclick="explore()"></ion-icon>
+            <ion-icon name="chatbubbles-outline" class="header-button messaging-button" id="messaging"></ion-icon>
+            <ion-icon name="cash-outline" class="header-button subscription-button" id="subscription"></ion-icon>
+            <ion-icon name="help-circle-outline" class="header-button icon-button" id="user-logo" onclick="login()"></ion-icon>
+        </container>
+    </header>
+</body>
+<script src="scripts.js"></script>
+<script></script>
+</html>
