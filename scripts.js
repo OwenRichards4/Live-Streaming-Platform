@@ -364,7 +364,7 @@ async function fetchUserFollowerData() {
         const jsonData = await response.json();
         followedArr = jsonData;
         userdata = jsonData;
-        if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
+        if (window.location.pathname == "/index.html" || window.location.pathname == "/" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/") {
             if (Array.isArray(jsonData.following)) {
                 const sorted = jsonData.following.sort((a, b) => b.liveCount - a.liveCount);
                 let vidDisplays = document.querySelectorAll('.live-channel-display');
@@ -634,7 +634,7 @@ function toggleSidebar() {
     toggled = !toggled;
 
     setTimeout(function() {
-        if (window.location.pathname == "/" || window.location.pathname == "/index.html") {
+        if (window.location.pathname == "/" || window.location.pathname == "/index.html" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/") {
             checkSizeofChannels(".followed-channels");
             checkSizeofChannels(".recommended-channels");
             checkSizeofGames();
@@ -662,7 +662,7 @@ function toggleFunc() {
 
 // ######################## RESIZE ######################## \\
 window.addEventListener('resize', () => {
-    if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
+    if (window.location.pathname == "/index.html" || window.location.pathname == "/" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/") {
         setTimeout(function() {
             checkSizeofChannels(".followed-channels");
             checkSizeofChannels(".recommended-channels");
@@ -717,7 +717,7 @@ function checkSizeofGames() {
 }
 
 
-
+console.log(window.location.pathname);
 
 
 // ############################## LOGIN ############################## \\
