@@ -364,7 +364,7 @@ async function fetchUserFollowerData() {
         const jsonData = await response.json();
         followedArr = jsonData;
         userdata = jsonData;
-        if (window.location.pathname == "/index.html" || window.location.pathname == "/" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/") {
+        if (window.location.pathname == "/index.html" || window.location.pathname == "/" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/" || window.location.pathname == "/Live-Streaming-Platform/index.html") {
             if (Array.isArray(jsonData.following)) {
                 const sorted = jsonData.following.sort((a, b) => b.liveCount - a.liveCount);
                 let vidDisplays = document.querySelectorAll('.live-channel-display');
