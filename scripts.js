@@ -313,7 +313,7 @@ async function fetchAccountsData() {
         if (window.location.pathname != "/signup.html" && window.location.pathname != "/signin.html") {
             fillRecommendedData(accounts);
         }
-        if (window.location.pathname == "/index.html") {
+        if (window.location.pathname == "/index.html" || window.location.pathname == "/" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/" || window.location.pathname == "/Live-Streaming-Platform/index.html") {
             countViewersPerGame(accounts);
         }
     } catch (error) {
@@ -634,7 +634,7 @@ function toggleSidebar() {
     toggled = !toggled;
 
     setTimeout(function() {
-        if (window.location.pathname == "/" || window.location.pathname == "/index.html" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/") {
+        if (window.location.pathname == "/index.html" || window.location.pathname == "/" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/" || window.location.pathname == "/Live-Streaming-Platform/index.html") {
             checkSizeofChannels(".followed-channels");
             checkSizeofChannels(".recommended-channels");
             checkSizeofGames();
@@ -662,7 +662,7 @@ function toggleFunc() {
 
 // ######################## RESIZE ######################## \\
 window.addEventListener('resize', () => {
-    if (window.location.pathname == "/index.html" || window.location.pathname == "/" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/") {
+    if (window.location.pathname == "/index.html" || window.location.pathname == "/" || window.location.pathname == "/Live-Streaming-Platform" || window.location.pathname == "/Live-Streaming-Platform/" || window.location.pathname == "/Live-Streaming-Platform/index.html") {
         setTimeout(function() {
             checkSizeofChannels(".followed-channels");
             checkSizeofChannels(".recommended-channels");
