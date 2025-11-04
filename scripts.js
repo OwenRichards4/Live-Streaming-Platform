@@ -277,7 +277,12 @@ async function fetchUserData() {
         }
         const jsonData = await response.json();
         let arr = []
-        document.getElementById('followed-toggle-header').innerHTML = "Followed Channels";
+        if (window.innerWidth > 1500) {
+            document.getElementById('followed-toggle-header').innerHTML = "Followed Channels";
+        } else if (window.innerWidth > 1000) {
+            document.getElementById('followed-toggle-header').innerHTML = "Followed";
+        }
+       
         count = 1;
         for (let i = 0; i < jsonData.following.length; i++) {
             if (jsonData.following[i].live && count <= 5) {
@@ -615,11 +620,13 @@ function toggleSidebar() {
         toggleMenu.style.width = "13%";
         toggleMenu.style.maxWidth = "250px";
 
-        if (document.getElementById('followed-toggle-header')) {
-            document.getElementById('followed-toggle-header').innerHTML = "Followed Channels";
-        }
-        if (document.getElementById('recommended-toggle-header')) {
-            document.getElementById('recommended-toggle-header').innerHTML = "Try Something New";
+        if (window.innerWidth > 1300) {
+            if (document.getElementById('followed-toggle-header')) {
+                document.getElementById('followed-toggle-header').innerHTML = "Followed Channels";
+            }
+            if (document.getElementById('recommended-toggle-header')) {
+                document.getElementById('recommended-toggle-header').innerHTML = "Try Something New";
+            }
         }
         
         main.style.marginLeft = "13%"
@@ -716,8 +723,6 @@ function checkSizeofGames() {
     });
 }
 
-
-console.log(window.location.pathname);
 
 
 // ############################## LOGIN ############################## \\
